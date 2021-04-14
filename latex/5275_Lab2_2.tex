@@ -360,6 +360,8 @@ Please following the following steps:
     \item[5.] Indicate noise component(s) if it exist and explain reason why you identify this component as a noise or artifacts.
     \item[6.] Plot first 10-second channel data before and after deleting noise/artifact component(s). 
 \end{itemize}
+\textcolor{red}{(5) component which has a smaller ID is an important component, which can't be deleted as possible as we can, and we can identify which ICA component is noise by taking a look at the ICA component 2D graph, we mainly want to remove muscle, ocular artifacts and other noise. The ocular artifact has relatively strong power in the part of the eye. In component 2, which has a strong ocular artifact. And for ICA component 0, which is a muscle artifact. There are many other artifacts, like only one specific channel has a strong power ICA component, that is ICA component with noise, which can be deleted. ICA component 1, we think is caused by "vehicle position" channel, but it can't be removed, because this component is the main eeg signal.
+}
 \end{tcolorbox}
 \begin{tcolorbox}[colback=RubineRed!5!white,colframe=RubineRed!75!black]
 \problem{7}{0+0+0+1+1+4+1+8+5=20}
@@ -372,10 +374,15 @@ Delete vehicle position channel and then:
     \item[5.]Plot component map in 2D.
     \item[6.] Indicate noise component(s) if it exist and explain reason why you identify this component as a noise or artifacts.
     \item[7.] Plot first 10-second channel data before and after deleting noise/artifact component(s).
-\end{itemize}   
+\end{itemize}
+\textcolor{red}{(6)component which has a smaller ID is an important component, hich can’t be deleted as posible as we can, and we can identify which ICA component is noise by taking a look at the ICA component 2D graph. We mainly want to remove muscle, ocular artifacts and other noise. The ocular artifact has relatively strong power in the part of the eye. In component 1, which has a strong ocular artifact. And for ICA component 0, which is a muscle artifact. There are many other artifacts, like only one specific channel has a strong power ICA component, that is ICA component with noise,which can be deleted.\newline}
 After above preprocessing steps... ...
 \subproblem{a} Compare results (e.g. component map) and try to explain your observations.
+\newline
+\includegraphics[height=4cm]{img/ica_res.png}\\
+\textcolor{red}{[a.0] (problem 6 ICA component vs problem 7 ICA component)\newline there are two main difference between problem 7 and problem 8: 1. having "vehicle position" or not 2. having using bandpass filter(1~50 Hz) or not.\newline In problem 6, eeg signal(having "vehicle position" channel) will produce bad ICA components, because "vehicle position" is not eeg signal and it isn't related to eeg signal, so "vehicle position" in eeg signal should be removed.\newline Bandpass filter(1~50 Hz)can filter out lots of unnecessary noise (Because there has no value that is smaller than 1 Hz and larger than 50 Hzin brain wave). After doing ICA, you can further filter out more artifacts (such as ocular artifacts, muscle artifacts, etc.). But if you do ICA without using a bandpass filter. The power spectrum in eeg signals will be out of the range of 1-50 Hz after removing the ICA components. Which means eeg signals still have noise after removing the ICA components.}
 \subproblem{b} Explain why it takes less time this time?
+\textcolor{red}{\newline ICA algorithm is mainly run in a loop, and it stops when the best component is separated. In problem 7, eeg signals don’t have vehicle position, which is not related to eeg signal. removing the "vehicle position" channel makes it easier to find ICA components in eeg signals.\newline In contrast, an eeg signal that contains a "vehicle position" channel that makes it hard to find the best ICA component, just because "vehicle position" is not related to eeg. So when eeg runs with the ICA algorithm, it runs more loops to find the best component, that takes a lot of time.}
 \end{tcolorbox}
 
 \begin{tcolorbox}[colback=RubineRed!5!white,colframe=RubineRed!75!black]
