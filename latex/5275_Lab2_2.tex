@@ -389,15 +389,20 @@ After above preprocessing steps... ...
 \problem{8}{10+10+10=30}
 Design your own EEG preprocessing strategy:
 \subproblem{a} Describe your design idea (e.g. Apply CleanLine function in EEGLab to eliminate environmental artifacts and apply lowpass filtering to remove drift... ...)
-\textcolor{red}{\newline Step 1. Drop the channel 'vehicle positio','A1' and 'A2', we dropped channel 'vehicle positio' since it wasn’t the signal source we're interested in, also, 'A1' and 'A2' were be the reference in our preprocessing strategy, instead, we used the average of the signal as our reference.
+\textcolor{red}{\newline Step 1. Set Reference by average: We avoided using 'A1' and 'A2' as our reference, instead, we set the average of our data as reference after we've done the previous steps to make sure our data is as clean as possible.
 \newline Step 2. Bandpass filter [1, 50] Hz to remove environmental noise
 \newline Step 3. Down Sampling to 250 Hz to save computational time
-\newline Step 4. Set Reference: Notice from step 1, we dropped the two referencing channels from Problem 6 and 7, because it is argued that setting reference to specific channels is not ideal since the referencing channels may contain artifact, which could potentially introduce bias and leak artifacts into the analysis.
-As a result, we avoided using 'A1' and 'A2' as our reference, instead, we set the average of our data as reference after we've done the previous steps to make sure our data is as clean as possible.
+\newline Step 4. Drop the channel 'vehicle positio','A1' and 'A2', we dropped channel 'vehicle positio' since it wasn’t the signal source we're interested in, also, 'A1' and 'A2' were be the reference in our preprocessing strategy, instead, we used the average of the signal as our reference.
 \newline Step 5. Run ICA and Remove bad components: We put our data into the ICA algorithm, but instead of indicating bad components manually, we used an experimental function "detect\_artifacts() provided by the MNE, due to our lack of experience in identifying corrupted components, hoping it would brought us better result.
 }
 \subproblem{b} Compare the performance (computational time) and results with Problem 7.
-\subproblem{c} Explain potential reason(s) why performance of your preprocessing strategy is superior/inferior to performance of Problem 7? 
+\newline
+\includegraphics[height=4cm]{img/p7_8_ica.png}\\
+\textcolor{red}{[b.0] (problem 7 ICA component vs problem 8 ICA component)\newline}
+\includegraphics[height=4cm]{img/p7_8_sig.png}\\
+\textcolor{red}{[b.1] (problem 7 sigmal vs problem 8 signal)\newline As we can see, both design took roughly the same time to execute, yet, the results are drastically different.  The result of the design from problem 7 is much smoother compare to the original data, but artifacts(might be muscle activities) can still be seen visually on the chart ; On the other hand, design from problem 8 does not manually identify bad components, but uses statistical approach to remove undesired components(skewness/ kurtosis/variance), the result hardly shows any differences from original data.}
+\subproblem{c} Explain potential reason(s) why performance of your preprocessing strategy is superior/inferior to performance of Problem 7?
+\textcolor{red}{\newline We reckoned that our design from problem 8 was inferior. Despite the fact that it is convenient to use the given function to automatically eliminate bad components, especially for unexperienced individuals, the function does not guarantee to output the optimal outcome, more often than not, it deletes the precious signal and leave the noise untouched, which is definitely NOT ideal. In our case, it deleted some of the components based on statistic factors, but the result showed little to no different from the original data, therefore retained very much the same amount of noise.}
 \end{tcolorbox}
 \begin{thebibliography}{6}
 \bibitem{einstein} 
@@ -437,7 +442,7 @@ This part is not for grading but for understanding learning situation of each st
 \subsection{Suggestions and Comments}
 \subsubsection{For instructor}
 \subsubsection{For teaching assistant(s)}
-\textcolor{red}{1. Giving example code would be significantly helpful to this assignment.\newline
+\textcolor{red}{1. Giving example code would be significantly helpful to this assignment.\newline 2. If some math formulas or equations can be explained more or add more friendly references would be better, especially for students without that much knowledge in some fields like signal processing, etc.\newline
 }
 \textbf{4.2.2.a For Min-Jiun}\\
 \textbf{4.2.2.b For Eric}\\
